@@ -12,7 +12,5 @@ spring:
     baseline-on-migrate: true
   jackson:
     default-property-inclusion: NON_NULL
-    visibility:
-      FIELD: ANY
 
 debug: true
