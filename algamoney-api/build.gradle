@@ -5,7 +5,7 @@ plugins {
 group 'io.github.tiagoadmstz'
 version '1.0.0-SNAPSHOT'
 
-apply plugin: 'war'
+apply plugin: 'java'
 apply plugin: 'io.spring.dependency-management'
 
 repositories {
@@ -13,12 +13,14 @@ repositories {
 }
 
 springBoot {
-    mainClassName = 'io.github.tiagoadmstz.algamoney-api.AlgaMoneyApiApplication'
+    mainClassName = 'io.github.tiagoadmstz.algamoney.api.AlgaMoneyApiApplication'
 }
 
 dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+    compile group: 'org.flywaydb', name: 'flyway-core'
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
     runtime group: 'org.springframework.boot', name: 'spring-boot-devtools'
     runtime group: 'com.h2database', name: 'h2', version: '1.4.200'
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
