@@ -12,5 +12,7 @@ spring:
     baseline-on-migrate: true
   jackson:
     default-property-inclusion: NON_NULL
+    deserialization:
+      FAIL_ON_UNKNOWN_PROPERTIES: true
 
 debug: true
