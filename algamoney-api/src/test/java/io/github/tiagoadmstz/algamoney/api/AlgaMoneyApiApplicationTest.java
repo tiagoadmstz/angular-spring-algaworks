@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class AlgaMoneyApiApplicationTest {
 
     @Test
-    public void loadContext(){
+    public void loadContext() {
     }
 
 }
