@@ -14,12 +14,13 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "category")
+@SequenceGenerator(name = "category_sequence", allocationSize = 1)
 public class Category implements Serializable {
 
     private static final long serialVersionUID = 2484421898967874325L;
     @Id
     @Column(name = "id", length = 20)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_sequence")
     private Long id;
     @NotNull
     @Size(min = 3, max = 50)
