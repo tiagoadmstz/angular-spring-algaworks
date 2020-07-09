@@ -3,10 +3,10 @@ CREATE TABLE category (
     name VARCHAR(50) NOT NULL
 );
 
-INSERT INTO category (id, name) values (1, 'Lazer');
-INSERT INTO category (id, name) values (2, 'Alimentação');
-INSERT INTO category (id, name) values (3, 'Supermercado');
-INSERT INTO category (id, name) values (4, 'Farmárcia');
-INSERT INTO category (id, name) values (5, 'Outros');
+CREATE SEQUENCE IF NOT EXISTS category_sequence START WITH 1 INCREMENT BY 1 MINVALUE 1 CACHE 1;
 
-CREATE SEQUENCE IF NOT EXISTS category_sequence START WITH 6 INCREMENT BY 1 MINVALUE 1;
+INSERT INTO category (id, name) values ((VALUES NEXT VALUE FOR category_sequence), 'Lazer');
+INSERT INTO category (id, name) values ((VALUES NEXT VALUE FOR category_sequence), 'Alimentação');
+INSERT INTO category (id, name) values ((VALUES NEXT VALUE FOR category_sequence), 'Supermercado');
+INSERT INTO category (id, name) values ((VALUES NEXT VALUE FOR category_sequence), 'Farmárcia');
+INSERT INTO category (id, name) values ((VALUES NEXT VALUE FOR category_sequence), 'Outros');

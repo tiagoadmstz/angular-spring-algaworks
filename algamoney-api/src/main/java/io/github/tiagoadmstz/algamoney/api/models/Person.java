@@ -3,6 +3,7 @@ package io.github.tiagoadmstz.algamoney.api.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -25,6 +26,7 @@ public class Person implements Serializable {
     @NotNull
     @Column(name = "active", columnDefinition = "boolean")
     private Boolean active = true;
+    @Valid
     @Embedded
     private Andress andress;
 
