@@ -12,6 +12,7 @@ spring:
     baseline-on-migrate: true
   jackson:
     default-property-inclusion: NON_NULL
+    date-format: yyyy-MM-dd
     deserialization:
       FAIL_ON_UNKNOWN_PROPERTIES: true
   messages:

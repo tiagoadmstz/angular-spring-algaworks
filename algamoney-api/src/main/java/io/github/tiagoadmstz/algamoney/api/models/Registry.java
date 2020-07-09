@@ -1,5 +1,7 @@
 package io.github.tiagoadmstz.algamoney.api.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,14 +22,15 @@ public class Registry implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "registry_sequence")
     private Long id;
     @NotNull
-    @Size(min = 5, max = 10)
+    @Size(min = 5, max = 50)
     @Column(name = "description", length = 50)
     private String description;
-    @NotNull
+    @JsonProperty("due-date")
     @Column(name = "due_date")
+    @JsonFormat(pattern =  "dd/MM/yyyy")
     private LocalDate dueDate;
-    @NotNull
     @Column(name = "payday")
+    @JsonFormat(pattern =  "dd/MM/yyyy")
     private LocalDate payday;
     @NotNull
     @Column(name = "registry_value", length = 10, scale = 2)
@@ -35,12 +38,15 @@ public class Registry implements Serializable {
     @Size(max = 100)
     @Column(name = "note", length = 100)
     private String note;
-    @Enumerated(EnumType.STRING)
+    @JsonProperty("type")
     @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private RegistryType registryType;
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "person_id")
     private Person person;

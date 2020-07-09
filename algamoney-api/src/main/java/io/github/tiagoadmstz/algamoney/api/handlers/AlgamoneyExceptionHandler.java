@@ -2,9 +2,11 @@ package io.github.tiagoadmstz.algamoney.api.handlers;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,10 +31,10 @@ public class AlgamoneyExceptionHandler extends ResponseEntityExceptionHandler {
     private MessageSource messageSource;
 
     @Override
-    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException exception, HttpHeaders headers, HttpStatus status, WebRequest request) {
         String userMessage = messageSource.getMessage("message.invalid", null, LocaleContextHolder.getLocale());
-        String developerMessage = Optional.ofNullable(ex.getCause()).orElse(ex).toString();
-        return handleExceptionInternal(ex,
+        String developerMessage = Optional.ofNullable(exception.getCause()).orElse(exception).toString();
+        return handleExceptionInternal(exception,
                 Arrays.asList(new Error(userMessage, developerMessage)),
                 headers,
                 HttpStatus.BAD_REQUEST,
@@ -45,16 +47,26 @@ public class AlgamoneyExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
-    public ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException ex, WebRequest request) {
+    public ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException exception, WebRequest request) {
         String userMessage = messageSource.getMessage("resource.not-found", null, LocaleContextHolder.getLocale());
-        String developerMessage = ex.toString();
-        return handleExceptionInternal(ex,
+        String developerMessage = exception.toString();
+        return handleExceptionInternal(exception,
                 Arrays.asList(new Error(userMessage, developerMessage)),
                 HttpHeaders.EMPTY,
                 HttpStatus.NOT_FOUND, request
         );
     }
 
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException exception, WebRequest request) {
+        String userMessage = messageSource.getMessage("resource.operation-not-permitted", null, LocaleContextHolder.getLocale());
+        String developerMessage = ExceptionUtils.getRootCauseMessage(exception);
+        return handleExceptionInternal(exception,
+                Arrays.asList(new Error(userMessage, developerMessage)),
+                HttpHeaders.EMPTY,
+                HttpStatus.BAD_REQUEST, request
+        );
+    }
 
     private List<Error> createErrorList(BindingResult bindingResult) {
         return bindingResult.getFieldErrors()
