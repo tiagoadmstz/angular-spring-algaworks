@@ -15,13 +15,15 @@ public class ZipCodeSerializer extends JsonSerializer<String> {
 
     public static String zipCodeFormat(String zipCode) {
         if (!"".equals(zipCode) && zipCode != null) {
-            int counter = 0;
-            char[] result = "##.###-##".toCharArray();
-            for (char c : zipCode.toCharArray()) {
-                if (result[counter] != "#".charAt(0)) counter++;
-                result[counter++] = c;
+            if (zipCode.length() == 7) {
+                int counter = 0;
+                char[] result = "##.###-##".toCharArray();
+                for (char c : zipCode.toCharArray()) {
+                    if (result[counter] != "#".charAt(0)) counter++;
+                    result[counter++] = c;
+                }
+                return String.valueOf(result);
             }
-            return String.valueOf(result);
         }
         return zipCode;
     }

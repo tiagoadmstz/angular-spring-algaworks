@@ -3,6 +3,7 @@ package io.github.tiagoadmstz.algamoney.api.controllers;
 import io.github.tiagoadmstz.algamoney.api.events.CreateEvent;
 import io.github.tiagoadmstz.algamoney.api.models.Person;
 import io.github.tiagoadmstz.algamoney.api.repositories.PersonRepository;
+import io.github.tiagoadmstz.algamoney.api.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,8 @@ public class PersonController {
 
     @Autowired
     private PersonRepository personRepository;
+    @Autowired
+    private PersonService personService;
     @Autowired
     private ApplicationEventPublisher publisher;
 
@@ -48,6 +51,17 @@ public class PersonController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         personRepository.deleteById(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Person> update(@PathVariable Long id, @Valid @RequestBody Person person) {
+        return ResponseEntity.ok(personService.update(id, person));
+    }
+
+    @PutMapping("/{id}/active")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateActiveProperty(@PathVariable Long id, @RequestBody Boolean active) {
+        personService.updateActiveProperty(id, active);
     }
 
 }
