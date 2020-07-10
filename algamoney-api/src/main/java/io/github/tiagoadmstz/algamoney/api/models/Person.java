@@ -1,5 +1,6 @@
 package io.github.tiagoadmstz.algamoney.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -29,5 +30,11 @@ public class Person implements Serializable {
     @Valid
     @Embedded
     private Andress andress;
+
+    @Transient
+    @JsonIgnore
+    public boolean isInactive() {
+        return !active;
+    }
 
 }

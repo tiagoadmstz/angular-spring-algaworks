@@ -29,5 +29,17 @@ dependencies {
     runtime group: 'org.springframework.boot', name: 'spring-boot-devtools'
     runtime group: 'com.h2database', name: 'h2', version: '1.4.200'
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    annotationProcessor group: 'org.hibernate', name: 'hibernate-jpamodelgen', version: '5.0.12.Final'
 }
 
+tasks.withType(JavaCompile) {
+    options.annotationProcessorGeneratedSourcesDirectory = file("src/main/java")
+}
+
+sourceSets {
+    generated {
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+}

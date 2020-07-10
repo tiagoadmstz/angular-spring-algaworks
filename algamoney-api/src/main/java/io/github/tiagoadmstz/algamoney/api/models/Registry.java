@@ -25,6 +25,7 @@ public class Registry implements Serializable {
     @Size(min = 5, max = 50)
     @Column(name = "description", length = 50)
     private String description;
+    @NotNull
     @JsonProperty("due-date")
     @Column(name = "due_date")
     @JsonFormat(pattern =  "dd/MM/yyyy")
