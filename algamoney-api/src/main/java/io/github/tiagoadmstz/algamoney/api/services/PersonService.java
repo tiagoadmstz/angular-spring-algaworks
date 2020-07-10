@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.function.Function;
+
 @Service
 public class PersonService {
 
@@ -14,17 +16,23 @@ public class PersonService {
     private PersonRepository personRepository;
 
     public Person update(Long id, Person person) {
-        return personRepository.findById(id).map(psn -> {
+        return findById(id, psn -> {
             BeanUtils.copyProperties(person, psn, "id");
             return personRepository.save(psn);
-        }).orElseThrow(() -> new EmptyResultDataAccessException(1));
+        });
     }
-
 
     public void updateActiveProperty(Long id, Boolean active) {
-        personRepository.findById(id).map(person -> {
+        findById(id, person -> {
             person.setActive(active);
             return personRepository.save(person);
-        }).orElseThrow(() -> new EmptyResultDataAccessException(1));
+        });
     }
+
+    public Person findById(Long id, Function<Person, Person> function) {
+        return personRepository.findById(id)
+                .map(person -> function != null ? function.apply(person) : person)
+                .orElseThrow(() -> new EmptyResultDataAccessException(1));
+    }
+
 }
