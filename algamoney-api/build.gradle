@@ -17,21 +17,6 @@ springBoot {
     mainClassName = 'io.github.tiagoadmstz.algamoney.api.AlgaMoneyApiApplication'
 }
 
-dependencies {
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
-    compile group: 'org.flywaydb', name: 'flyway-core'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
-    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.10'
-    compile group: 'com.graphql-java', name: 'graphql-java', version: '2020-07-03T01-10-37-bb87d8f'
-    compile group: 'com.graphql-java', name: 'graphql-java-tools', version: '5.2.4'
-    runtime group: 'org.springframework.boot', name: 'spring-boot-devtools'
-    runtime group: 'com.h2database', name: 'h2', version: '1.4.200'
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    annotationProcessor group: 'org.hibernate', name: 'hibernate-jpamodelgen', version: '5.0.12.Final'
-}
-
 tasks.withType(JavaCompile) {
     options.annotationProcessorGeneratedSourcesDirectory = file("src/main/java")
 }
@@ -42,4 +27,20 @@ sourceSets {
             srcDirs = ['src/main/java']
         }
     }
+}
+
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+    compile group: 'org.flywaydb', name: 'flyway-core'
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.10'
+    compile group: 'com.graphql-java', name: 'graphql-java', version: '2020-07-03T01-10-37-bb87d8f'
+    compile group: 'com.graphql-java', name: 'graphql-java-tools', version: '5.2.4'
+    runtime group: 'org.springframework.boot', name: 'spring-boot-devtools'
+    runtime group: 'com.h2database', name: 'h2', version: '1.4.200'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    annotationProcessor group: 'org.hibernate', name: 'hibernate-jpamodelgen', version: '5.0.12.Final'
 }
