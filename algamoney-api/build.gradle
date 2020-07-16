@@ -9,6 +9,9 @@ version '1.0.0-SNAPSHOT'
 apply plugin: 'java'
 apply plugin: 'io.spring.dependency-management'
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 repositories {
     mavenCentral()
 }
@@ -34,6 +37,8 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+    compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.5.0.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.1.1.RELEASE'
     compile group: 'org.flywaydb', name: 'flyway-core'
     compile group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.10'
