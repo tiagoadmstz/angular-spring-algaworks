@@ -1,4 +1,4 @@
-package io.github.tiagoadmstz.algamoney.api.config;
+package io.github.tiagoadmstz.algamoney.api.security.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
