@@ -4,6 +4,7 @@ import io.github.tiagoadmstz.algamoney.api.events.CreateEvent;
 import io.github.tiagoadmstz.algamoney.api.models.Entry;
 import io.github.tiagoadmstz.algamoney.api.repositories.EntryRepository;
 import io.github.tiagoadmstz.algamoney.api.repositories.filters.EntryFilter;
+import io.github.tiagoadmstz.algamoney.api.repositories.projections.SummaryEntry;
 import io.github.tiagoadmstz.algamoney.api.services.EntryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/registries")
+@RequestMapping("/entries")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class EntryController {
 
@@ -31,6 +32,12 @@ public class EntryController {
     @PreAuthorize("hasAuthority('ROLE_SEARCH_ENTRY') and #oauth2.hasScope('read')")
     public Page<Entry> search(EntryFilter entryFilter, Pageable pageable) {
         return entryRepository.filter(entryFilter, pageable);
+    }
+
+    @GetMapping(params = "summarize")
+    @PreAuthorize("hasAuthority('ROLE_SEARCH_ENTRY') and #oauth2.hasScope('read')")
+    public Page<SummaryEntry> summarize(EntryFilter entryFilter, Pageable pageable) {
+        return entryRepository.summarize(entryFilter, pageable);
     }
 
     @GetMapping("/{id}")
