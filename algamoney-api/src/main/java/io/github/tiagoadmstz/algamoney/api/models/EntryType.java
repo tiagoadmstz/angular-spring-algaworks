@@ -1,6 +1,6 @@
 package io.github.tiagoadmstz.algamoney.api.models;
 
-public enum RegistryType {
+public enum EntryType {
 
     INCOME,
     EXPENSE;

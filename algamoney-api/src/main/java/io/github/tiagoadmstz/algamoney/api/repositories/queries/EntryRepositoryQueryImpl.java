@@ -1,8 +1,8 @@
 package io.github.tiagoadmstz.algamoney.api.repositories.queries;
 
-import io.github.tiagoadmstz.algamoney.api.models.Registry;
-import io.github.tiagoadmstz.algamoney.api.models.Registry_;
-import io.github.tiagoadmstz.algamoney.api.repositories.filters.RegistryFilter;
+import io.github.tiagoadmstz.algamoney.api.models.Entry;
+import io.github.tiagoadmstz.algamoney.api.models.Entry_;
+import io.github.tiagoadmstz.algamoney.api.repositories.filters.EntryFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -18,42 +18,42 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RegistryRepositoryQueryImpl implements RegistryRepositoryQuery {
+public class EntryRepositoryQueryImpl implements EntryRepositoryQuery {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public Page<Registry> filter(RegistryFilter registryFilter, Pageable pageable) {
+    public Page<Entry> filter(EntryFilter entryFilter, Pageable pageable) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Registry> criteriaQuery = criteriaBuilder.createQuery(Registry.class);
-        Root<Registry> root = criteriaQuery.from(Registry.class);
+        CriteriaQuery<Entry> criteriaQuery = criteriaBuilder.createQuery(Entry.class);
+        Root<Entry> root = criteriaQuery.from(Entry.class);
 
-        Predicate[] predicates = createPredicates(registryFilter, criteriaBuilder, root);
+        Predicate[] predicates = createPredicates(entryFilter, criteriaBuilder, root);
         criteriaQuery.where(predicates);
 
-        TypedQuery<Registry> typedQuery = entityManager.createQuery(criteriaQuery);
+        TypedQuery<Entry> typedQuery = entityManager.createQuery(criteriaQuery);
         addPaginationRegistrictions(typedQuery, pageable);
 
-        return new PageImpl(typedQuery.getResultList(), pageable, total(registryFilter));
+        return new PageImpl(typedQuery.getResultList(), pageable, total(entryFilter));
     }
 
-    private Predicate[] createPredicates(RegistryFilter registryFilter, CriteriaBuilder criteriaBuilder, Root<Registry> root) {
+    private Predicate[] createPredicates(EntryFilter entryFilter, CriteriaBuilder criteriaBuilder, Root<Entry> root) {
         List<Predicate> predicates = new ArrayList();
 
-        if (!StringUtils.isEmpty(registryFilter.getDescription())) {
+        if (!StringUtils.isEmpty(entryFilter.getDescription())) {
             predicates.add(criteriaBuilder.like(
-                    criteriaBuilder.lower(root.get(Registry_.description)), "%" + registryFilter.getDescription() + "%"
+                    criteriaBuilder.lower(root.get(Entry_.description)), "%" + entryFilter.getDescription() + "%"
             ));
         }
-        if (registryFilter.getDueDateFrom() != null) {
+        if (entryFilter.getDueDateFrom() != null) {
             predicates.add(criteriaBuilder.greaterThanOrEqualTo(
-                    root.get(Registry_.dueDate), registryFilter.getDueDateFrom()
+                    root.get(Entry_.dueDate), entryFilter.getDueDateFrom()
             ));
         }
-        if (registryFilter.getDueDateUntil() != null) {
+        if (entryFilter.getDueDateUntil() != null) {
             predicates.add(criteriaBuilder.lessThanOrEqualTo(
-                    root.get(Registry_.dueDate), registryFilter.getDueDateUntil()
+                    root.get(Entry_.dueDate), entryFilter.getDueDateUntil()
             ));
         }
 
@@ -61,7 +61,7 @@ public class RegistryRepositoryQueryImpl implements RegistryRepositoryQuery {
     }
 
 
-    private void addPaginationRegistrictions(TypedQuery<Registry> typedQuery, Pageable pageable) {
+    private void addPaginationRegistrictions(TypedQuery<Entry> typedQuery, Pageable pageable) {
         int pageNumber = pageable.getPageNumber();
         int pageSize = pageable.getPageSize();
         int first = pageNumber * pageSize;
@@ -70,12 +70,12 @@ public class RegistryRepositoryQueryImpl implements RegistryRepositoryQuery {
         typedQuery.setMaxResults(pageSize);
     }
 
-    private Long total(RegistryFilter registryFilter) {
+    private Long total(EntryFilter entryFilter) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> query = criteriaBuilder.createQuery(Long.class);
-        Root<Registry> root = query.from(Registry.class);
+        Root<Entry> root = query.from(Entry.class);
 
-        Predicate[] predicates = createPredicates(registryFilter, criteriaBuilder, root);
+        Predicate[] predicates = createPredicates(entryFilter, criteriaBuilder, root);
         query.where(predicates);
 
         query.select(criteriaBuilder.count(root));

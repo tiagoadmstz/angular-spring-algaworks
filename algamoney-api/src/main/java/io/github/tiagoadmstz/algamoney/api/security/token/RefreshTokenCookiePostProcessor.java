@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @ControllerAdvice
-public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2AccessToken> {
+public class RefreshTokenCookiePostProcessor implements ResponseBodyAdvice<OAuth2AccessToken> {
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
