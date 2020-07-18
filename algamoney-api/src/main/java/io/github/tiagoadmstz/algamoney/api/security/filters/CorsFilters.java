@@ -1,5 +1,7 @@
 package io.github.tiagoadmstz.algamoney.api.security.filters;
 
+import io.github.tiagoadmstz.algamoney.api.properties.config.AlgamoneyApiProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -16,18 +18,19 @@ import java.io.IOException;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilters extends FilterAdapter {
 
-    private String allowOrigin = "http://localhost:8000";
+    @Autowired
+    private AlgamoneyApiProperties apiProperties;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
 
-        resp.setHeader("Access-Control-Allow-Origin", allowOrigin);
+        resp.setHeader("Access-Control-Allow-Origin", apiProperties.getAllowOrigin());
         resp.setHeader("Access-Control-Allow-Credentials", "true");
 
         if ("OPTIONS".equals(req.getMethod())
-                && allowOrigin.equals(req.getHeader("Origin"))) {
+                && apiProperties.getAllowOrigin().equals(req.getHeader("Origin"))) {
             resp.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
             resp.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
             resp.setHeader("Access-Control-Max-Age", "3600");
