@@ -6,7 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
 @Data
-public class RegistryFilter {
+public class EntryFilter {
 
     private String description;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
