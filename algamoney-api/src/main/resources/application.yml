@@ -21,6 +21,10 @@ spring:
   messages:
     encoding: ISO-8859-1
 
+algamoney:
+  security:
+    enable-https: false
+
 logging:
   level:
     root: WARN
