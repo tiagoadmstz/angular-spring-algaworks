@@ -19,7 +19,7 @@ public class AppUser implements Serializable {
     private static final long serialVersionUID = -4361222749026119730L;
     @Id
     @Column(name = "id", length = 20)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name", length = 50)
     private String name;
