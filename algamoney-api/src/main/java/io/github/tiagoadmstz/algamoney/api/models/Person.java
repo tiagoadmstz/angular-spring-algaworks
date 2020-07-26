@@ -18,7 +18,7 @@ public class Person implements Serializable {
     private static final long serialVersionUID = -6968197561694183052L;
     @Id
     @Column(name = "id", length = 20)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "person_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
     @Size(min = 10, max = 255)

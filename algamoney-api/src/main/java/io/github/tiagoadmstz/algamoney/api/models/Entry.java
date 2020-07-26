@@ -19,7 +19,7 @@ public class Entry implements Serializable {
 
     private static final long serialVersionUID = 9011357890249098191L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entry_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
     @Size(min = 5, max = 50)

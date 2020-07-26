@@ -1,5 +1,5 @@
 CREATE TABLE entry (
-    id BIGINT(20) PRIMARY KEY,
+    id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     description VARCHAR(50) NOT NULL,
     due_date DATE,
     payday DATE,
@@ -12,7 +12,5 @@ CREATE TABLE entry (
     FOREIGN KEY (person_id) REFERENCES person(id)
 );
 
-CREATE SEQUENCE entry_sequence START WITH 1 INCREMENT BY 1 MINVALUE 1 CACHE 1;
-
-INSERT INTO entry(id, description, due_date, payday, entry_value, note, type, category_id, person_id) VALUES ((VALUES NEXT VALUE FOR entry_sequence), 'Compra de mouse', '2020-07-09', '2020-07-09', 15.00, 'teste 1', 'EXPENSE', 5, 1);
-INSERT INTO entry(id, description, due_date, payday, entry_value, note, type, category_id, person_id) VALUES ((VALUES NEXT VALUE FOR entry_sequence), 'Venda de mouse', '2020-07-09', '2020-07-09', 15.00, 'teste 2', 'INCOME', 5, 1);
+INSERT INTO entry(description, due_date, payday, entry_value, note, type, category_id, person_id) VALUES ('Compra de mouse', '2020-07-09', '2020-07-09', 15.00, 'teste 1', 'EXPENSE', 5, 1);
+INSERT INTO entry(description, due_date, payday, entry_value, note, type, category_id, person_id) VALUES ('Venda de mouse', '2020-07-09', '2020-07-09', 15.00, 'teste 2', 'INCOME', 5, 1);

@@ -20,7 +20,7 @@ public class Category implements Serializable {
     private static final long serialVersionUID = 2484421898967874325L;
     @Id
     @Column(name = "id", length = 20)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
     @Size(min = 3, max = 50)

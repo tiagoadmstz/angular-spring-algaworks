@@ -1,51 +1,49 @@
 plugins {
-    id "org.springframework.boot" version "2.3.1.RELEASE"
-    id "io.freefair.lombok" version "5.1.0"
+    id 'org.springframework.boot' version '2.3.2.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
 }
 
-group 'io.github.tiagoadmstz'
-version '1.0.0-SNAPSHOT'
+group = 'io.github.tiagoadmstz'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
 
-apply plugin: 'java'
-apply plugin: 'io.spring.dependency-management'
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
 
 repositories {
     mavenCentral()
 }
 
-springBoot {
-    mainClassName = 'io.github.tiagoadmstz.algamoney.api.AlgaMoneyApiApplication'
-}
-
-tasks.withType(JavaCompile) {
-    options.annotationProcessorGeneratedSourcesDirectory = file("src/main/java")
-}
-
-sourceSets {
-    generated {
-        java {
-            srcDirs = ['src/main/java']
-        }
-    }
-}
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
 
 dependencies {
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
-    compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.5.0.RELEASE'
-    compile group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.1.1.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
-    compile group: 'org.flywaydb', name: 'flyway-core'
-    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.10'
-    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
-    runtime group: 'org.springframework.boot', name: 'spring-boot-devtools'
-    runtime group: 'com.h2database', name: 'h2', version: '1.4.200'
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    annotationProcessor group: 'org.hibernate', name: 'hibernate-jpamodelgen', version: '5.0.12.Final'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.security.oauth:spring-security-oauth2:2.5.0.RELEASE'
+    implementation 'org.springframework.security:spring-security-jwt:1.1.1.RELEASE'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.apache.commons:commons-lang3:3.10'
+    implementation 'mysql:mysql-connector-java:8.0.21'
+    compileOnly 'org.springframework.boot:spring-boot-gradle-plugin:2.3.1.RELEASE'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation 'com.h2database:h2:1.4.200'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.hibernate:hibernate-jpamodelgen:5.0.12.Final'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+test {
+    useJUnitPlatform()
 }
