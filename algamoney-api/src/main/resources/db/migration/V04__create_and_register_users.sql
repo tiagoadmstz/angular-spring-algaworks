@@ -26,6 +26,7 @@ INSERT INTO permition (description) VALUES ('ROLE_REGISTER_PERSON');
 INSERT INTO permition (description) VALUES ('ROLE_REMOVE_PERSON');
 INSERT INTO permition (description) VALUES ('ROLE_SEARCH_PERSON');
 INSERT INTO permition (description) VALUES ('ROLE_REGISTER_ENTRY');
+INSERT INTO permition (description) VALUES ('ROLE_UPDATE_ENTRY');
 INSERT INTO permition (description) VALUES ('ROLE_REMOVE_ENTRY');
 INSERT INTO permition (description) VALUES ('ROLE_SEARCH_ENTRY');
 
@@ -37,3 +38,4 @@ INSERT INTO user_permition (user_id, permition_id) VALUES (1, 5);
 INSERT INTO user_permition (user_id, permition_id) VALUES (1, 6);
 INSERT INTO user_permition (user_id, permition_id) VALUES (1, 7);
 INSERT INTO user_permition (user_id, permition_id) VALUES (1, 8);
+INSERT INTO user_permition (user_id, permition_id) VALUES (1, 9);
