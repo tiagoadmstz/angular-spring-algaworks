@@ -2,10 +2,10 @@ package io.github.tiagoadmstz.algamoney.api.security.services;
 
 import io.github.tiagoadmstz.algamoney.api.models.AppUser;
 import io.github.tiagoadmstz.algamoney.api.repositories.AppUserRepository;
+import io.github.tiagoadmstz.algamoney.api.security.token.SystemUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,7 +26,7 @@ public class AppUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<AppUser> user = appUserRepository.findByEmail(email);
         AppUser appUser = user.orElseThrow(() -> new UsernameNotFoundException("Usuário e/ou senha incorretos"));
-        return new User(email, appUser.getPassword(), getPermitions(appUser));
+        return new SystemUser(appUser, getPermitions(appUser));
     }
 
     private Collection<? extends GrantedAuthority> getPermitions(AppUser appUser) {

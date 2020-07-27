@@ -1,6 +1,8 @@
 spring:
   profiles:
-    active: dev
+    active:
+      - dev
+      - basic-security
   application:
     name: algamoney-api
   main:
@@ -27,11 +29,12 @@ spring:
 spring:
   profiles: dev
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:~/test
-    username: sa
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?serverTimezone=UTC&useLegacyDatetimeCode=false
+    username: root
+    password: Pedro1714@#$
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
 
 algamoney:
   allow-origin: https://localhost:8000
@@ -44,9 +47,9 @@ spring:
   profiles: prod
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: {JDBC_DATABASE_URL} #jdbc:mysql://localhost:3306/test?serverTimezone=UTC&useLegacyDatetimeCode=false
-    username: {JDBC_DATABASE_USERNAME} #root
-    password: {JDBC_DATABASE_PASSWORD} #Pedro1714@#$
+    url: {JDBC_DATABASE_URL}
+    username: {JDBC_DATABASE_USERNAME}
+    password: {JDBC_DATABASE_PASSWORD}
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
 
