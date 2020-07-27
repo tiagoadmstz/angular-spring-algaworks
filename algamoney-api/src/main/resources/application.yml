@@ -1,8 +1,8 @@
 spring:
   profiles:
     active:
-      - dev
-      - basic-security
+      - prod
+      - oauth-security
   application:
     name: algamoney-api
   main:
