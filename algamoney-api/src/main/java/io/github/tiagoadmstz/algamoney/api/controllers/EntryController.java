@@ -57,6 +57,17 @@ public class EntryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdEntry);
     }
 
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_UPDATE_ENTRY') and #oauth2.hasScope('write')")
+    public ResponseEntity<Entry> update(@PathVariable Long id, @Valid @RequestBody Entry entry) {
+        try {
+            Entry savedEntry = entryService.update(id, entry);
+            return ResponseEntity.ok(savedEntry);
+        } catch (IllegalArgumentException exception) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_REMOVE_ENTRY') and #oauth2.hasScope('write')")

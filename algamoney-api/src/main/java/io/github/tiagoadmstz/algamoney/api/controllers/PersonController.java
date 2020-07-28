@@ -3,12 +3,13 @@ package io.github.tiagoadmstz.algamoney.api.controllers;
 import io.github.tiagoadmstz.algamoney.api.events.CreateEvent;
 import io.github.tiagoadmstz.algamoney.api.models.Person;
 import io.github.tiagoadmstz.algamoney.api.repositories.PersonRepository;
+import io.github.tiagoadmstz.algamoney.api.repositories.filters.PersonFilter;
 import io.github.tiagoadmstz.algamoney.api.services.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,9 +29,8 @@ public class PersonController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_SEARCH_PERSON') and #oauth2.hasScope('read')")
-    public Page<Person> list(@RequestParam(required = false) Integer page,
-                             @RequestParam(required = false) Integer size) {
-        return personRepository.findAll(PageRequest.of(page, size));
+    public Page<Person> search(PersonFilter personFilter, Pageable pageable) {
+        return personRepository.filter(personFilter, pageable);
     }
 
     @GetMapping("/{id}")
