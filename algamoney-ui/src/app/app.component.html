@@ -5,12 +5,12 @@
     </div>
 
     <div class="ui-g-12 ui-fluid">
-      <label>Descrição</label>
-      <input pInputText type="text">
+      <label style="margin-right: 10px;">Descrição</label>
+      <input pInputText type="text" style="width: 92.6%;">
     </div>
 
     <div class="ui-g-12">
-      <label style="display: block">Vencimento</label>
+      <label style="display: block; margin-top: 10px;">Vencimento</label>
       <input pInputText type="text" style="width: 95px">
 
       <label style="margin: 0 5px">até</label>
@@ -18,13 +18,13 @@
     </div>
 
     <div class="ui-g-12">
-      <button pButton type="submit" label="Pesquisar"></button>
+      <button pButton type="submit" style="margin: 10px 0;" label="Pesquisar"></button>
     </div>
   </div>
 
   <div class="ui-g">
     <div class="ui-g-12">
-      <p-table [value]="lancamentos">
+      <p-table [value]="lancamentos" [paginator]="true" [rows]="5" [responsive]="true" styleClass="p-datatable-striped">
         <ng-template pTemplate="header">
           <tr>
             <th>Pessoa</th>
@@ -32,6 +32,7 @@
             <th class="col-data-header">Vencimento</th>
             <th class="col-data-header">Pagamento</th>
             <th class="col-valor-header">Valor</th>
+            <th class="col-data-header"></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-lancamento>
@@ -40,7 +41,13 @@
             <td>{{lancamento.descricao}}</td>
             <td class="col-data-content">{{lancamento.dataVencimento}}</td>
             <td class="col-data-content">{{lancamento.dataPagamento}}</td>
-            <td class="col-valor-content">{{lancamento.valor}}</td>
+            <td class="col-valor-content">
+              <span [style.color]="lancamento.tipo == 'DESPESA' ? 'red' : 'blue'">{{lancamento.valor}}</span>
+            </td>
+            <td class="col-acoes">
+              <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
+              <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+            </td>
           </tr>
         </ng-template>
       </p-table>
