@@ -34,3 +34,11 @@ label {
   text-align: center;
   width: 90px;
 }
+
+body .ui-table .ui-table-tbody > tr:nth-child(2n) {
+  background-color: #a8a8a8;
+}
+
+body .ui-table .ui-table-thead > tr > th {
+  background-color: #a8a8a8;
+}
