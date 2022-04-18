@@ -23,18 +23,41 @@
             <th>Cidade</th>
             <th>Estado</th>
             <th>Status</th>
-            <th class="col-data-header"></th>
+            <th class="col-acoes-header"></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-pessoa>
           <tr>
-            <td>{{pessoa.nome}}</td>
-            <td>{{pessoa.cidade}}</td>
-            <td>{{pessoa.estado}}</td>
-            <td>{{pessoa.status}}</td>
+            <td>
+              <span class="p-column-title">Nome</span>
+              {{pessoa.nome}}
+            </td>
+            <td>
+              <span class="p-column-title">Cidade</span>
+              {{pessoa.cidade}}
+            </td>
+            <td>
+              <span class="p-column-title">Estado</span>
+              {{pessoa.estado}}
+            </td>
+            <td>
+              <span class="p-column-title">Status</span>
+              <a href="javascript:;" [pTooltip]="pessoa.ativo ? 'Desativar' : 'Ativar'" tooltipPosition="top">
+                {{pessoa.status ? 'Ativo' : 'Inativo'}}
+              </a>
+            </td>
             <td class="col-acoes">
+              <span class="p-column-title"></span>
               <a pButton icon="pi pi-pencil" style="margin-right: 5px;" pTooltip="Editar" tooltipPosition="top"></a>
               <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="5">
+              Nenhuma pessoa encontrada
             </td>
           </tr>
         </ng-template>
